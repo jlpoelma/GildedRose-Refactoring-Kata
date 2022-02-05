@@ -16,57 +16,69 @@ class GildedRoseTest {
     }
     @Test
     void updateBaseItem() {
-        Item[] items = new Item[] { new Item("foo", 10, 20) };
+        String name = "foo";
+        Item[] items = new Item[] { new Item(name, 10, 20),
+                                    new Item(name, -2, 20),
+                                    new Item(name, 10, 0)};
+        Item[] updatedItems = new Item[] {  new Item(name, 9, 19),
+                                            new Item(name, -3, 18),
+                                            new Item(name, 9, 0)};
         GildedRose app = new GildedRose(items);
         app.updateQuality();
-        assertEquals(9, app.items[0].sellIn);
-        assertEquals(19, app.items[0].quality);
+        for (int i=0; i < app.items.length; i++){
+            assertEquals(updatedItems[i].quality, app.items[i].quality);
+            assertEquals(updatedItems[i].sellIn, app.items[i].sellIn);
+        }
     }
 
-    @Test
-    void updateExpiredBaseItem() {
-        Item[] items = new Item[] { new Item("foo", -2, 20) };
-        GildedRose app = new GildedRose(items);
-        app.updateQuality();
-        assertEquals(-3, app.items[0].sellIn);
-        assertEquals(18, app.items[0].quality);
-    }
 
-    @Test
-    void assertNonNegative() {
-        Item[] items = new Item[] { new Item("foo", 10, 0) };
-        GildedRose app = new GildedRose(items);
-        app.updateQuality();
-        assertTrue(app.items[0].quality >= 0);
-    }
 
     @Test
     void updateAgedBrie(){
-        Item[] items = new Item[] { new Item("Aged Brie", 10, 10), new Item("Aged Brie", -4, 10) };
+        String name = "Aged Brie";
+        Item[] items = new Item[] { new Item(name, 10, 10),
+                                    new Item(name, -4, 10) };
+        Item[] updatedItems = new Item[] {  new Item(name, 9, 11),
+                                            new Item(name, -5, 12) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
-        assertEquals(9, app.items[0].sellIn);
-        assertEquals(11, app.items[0].quality);
-        assertEquals(-5, app.items[1].sellIn);
-        assertEquals(12, app.items[1].quality);
+        for (int i=0; i < app.items.length; i++){
+            assertEquals(updatedItems[i].quality, app.items[i].quality);
+            assertEquals(updatedItems[i].sellIn, app.items[i].sellIn);
+        }
     }
 
     @Test
     void updateSulfuras(){
-        Item[] items = new Item[] { new Item("Sulfuras, Hand of Ragnaros", 10, 80)};
+        String name = "Sulfuras, Hand of Ragnaros";
+        Item[] items = new Item[] { new Item(name, 10, 80)};
+        Item[] updatedItems = new Item[] { new Item(name, 10, 80)};
         GildedRose app = new GildedRose(items);
         app.updateQuality();
-        assertEquals(10, app.items[0].sellIn);
-        assertEquals(80, app.items[0].quality);
+        for (int i=0; i < app.items.length; i++){
+            assertEquals(updatedItems[i].quality, app.items[i].quality);
+            assertEquals(updatedItems[i].sellIn, app.items[i].sellIn);
+        }
     }
 
     @Test
     void updateBackstage(){
-        Item[] items = new Item[] {new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20),};
+        String name = "Backstage passes to a TAFKAL80ETC concert";
+        Item[] items = new Item[] { new Item(name, 15, 20),
+                                    new Item(name, 10, 20),
+                                    new Item(name, 5, 20),
+                                    new Item(name, 0, 20)};
+        Item[] updatedItems = new Item[] {  new Item(name, 14, 21),
+                                            new Item(name, 9, 22),
+                                            new Item(name, 4, 23),
+                                            new Item(name, -1, 0)};
+
         GildedRose app = new GildedRose(items);
         app.updateQuality();
-        assertEquals(14, app.items[0].sellIn);
-        assertEquals(21, app.items[0].quality);
+        for (int i=0; i < app.items.length; i++){
+            assertEquals(updatedItems[i].quality, app.items[i].quality);
+            assertEquals(updatedItems[i].sellIn, app.items[i].sellIn);
+        }
     }
 
     @Test
