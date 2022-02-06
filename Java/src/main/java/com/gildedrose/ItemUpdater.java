@@ -7,9 +7,9 @@ public enum ItemUpdater {
         public void updateQuality(Item item) {
             int updatedQuality = item.quality;
             if(item.sellIn > 0){
-                updatedQuality -= 1;
+                updatedQuality -= Constants.BASE_UPDATE_VALUE;
             } else {
-                updatedQuality -= 2;
+                updatedQuality -= 2*Constants.BASE_UPDATE_VALUE;
             }
             if (updatedQuality >= Constants.QUALITY_LOWER_LIMIT){
                 item.quality = updatedQuality;
@@ -21,9 +21,9 @@ public enum ItemUpdater {
         public void updateQuality(Item item) {
             int updatedQuality = item.quality;
             if(item.sellIn > 0){
-                updatedQuality += 1;
+                updatedQuality += Constants.BASE_UPDATE_VALUE;
             } else {
-                updatedQuality += 2;
+                updatedQuality += 2*Constants.BASE_UPDATE_VALUE;
             }
             if (updatedQuality <= Constants.QUALITY_UPPER_LIMIT){
                 item.quality = updatedQuality;
@@ -44,11 +44,11 @@ public enum ItemUpdater {
         public void updateQuality(Item item) {
             int updatedQuality = item.quality;
             if(item.sellIn > 10){
-                updatedQuality += 1;
+                updatedQuality += Constants.BASE_UPDATE_VALUE;
             } else if (item.sellIn > 5) {
-                updatedQuality += 2;
+                updatedQuality += 2*Constants.BASE_UPDATE_VALUE;
             } else if (item.sellIn > 0) {
-                updatedQuality += 3;
+                updatedQuality += 3*Constants.BASE_UPDATE_VALUE;
             } else {
                 updatedQuality = 0;
             }
@@ -62,9 +62,9 @@ public enum ItemUpdater {
         public void updateQuality(Item item) {
             int updatedQuality = item.quality;
             if(item.sellIn > 0){
-                updatedQuality -= 2;
+                updatedQuality -= 2*Constants.BASE_UPDATE_VALUE;
             } else {
-                updatedQuality -= 4;
+                updatedQuality -= 4*Constants.BASE_UPDATE_VALUE;
             }
             if (updatedQuality >= Constants.QUALITY_LOWER_LIMIT){
                 item.quality = updatedQuality;
@@ -73,11 +73,12 @@ public enum ItemUpdater {
     };
     public abstract void updateQuality(Item item);
     public void updateSellIn(Item item){
-        item.sellIn -= 1;
+        item.sellIn -= Constants.BASE_UPDATE_VALUE;
     }
 
     private static class Constants {
         public static int QUALITY_UPPER_LIMIT = 50;
         public static int QUALITY_LOWER_LIMIT = 0;
+        public static int BASE_UPDATE_VALUE = 1;
     }
 }
