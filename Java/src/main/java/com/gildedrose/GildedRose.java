@@ -6,6 +6,7 @@ class GildedRose {
     private final String AGED_BRIE = "Aged Brie";
     private final String BACKSTAGE = "Backstage passes to a TAFKAL80ETC concert";
     private final String SULFURAS = "Sulfuras, Hand of Ragnaros";
+    private final String CONJURED = "Conjured";
 
     public GildedRose(Item[] items) {
         this.items = items;
@@ -14,53 +15,57 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item item : items) {
-            if (!item.name.equals(AGED_BRIE)
-                && !item.name.equals(BACKSTAGE)) {
-                if (item.quality > 0) {
-                    if (!item.name.equals(SULFURAS)) {
-                        item.quality -= 1;
-                    }
-                }
-            } else {
-                if (item.quality < 50) {
-                    item.quality += 1;
-
-                    if (item.name.equals(BACKSTAGE)) {
-                        if (item.sellIn < 11) {
-                            if (item.quality < 50) {
-                                item.quality += 1;
-                            }
-                        }
-
-                        if (item.sellIn < 6) {
-                            if (item.quality < 50) {
-                                item.quality += 1;
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (!item.name.equals(SULFURAS)) {
-                item.sellIn -= 1;
-            }
-
-            if (item.sellIn < 0) {
-                if (!item.name.equals(AGED_BRIE)) {
-                    if (!item.name.equals(BACKSTAGE)) {
-                        if (item.quality > 0) {
-                            if (!item.name.equals(SULFURAS)) {
-                                item.quality -= 1;
-                            }
-                        }
+            int updatedQuality = item.quality;
+            switch (item.name){
+                case AGED_BRIE:
+                    if(item.sellIn > 0){
+                        updatedQuality += 1;
                     } else {
-                        item.quality = 0;
+                        updatedQuality += 2;
                     }
-                } else {
-                    if (item.quality < 50) {
-                        item.quality += 1;
+                    if (updatedQuality <= 50){
+                        item.quality = updatedQuality;
                     }
-                }
+                    item.sellIn -= 1;
+                    break;
+                case BACKSTAGE:
+                    if(item.sellIn > 10){
+                        updatedQuality += 1;
+                    } else if (item.sellIn > 5) {
+                        updatedQuality += 2;
+                    } else if (item.sellIn > 0) {
+                        updatedQuality += 3;
+                    } else {
+                        updatedQuality = 0;
+                    }
+                    if (updatedQuality <= 50){
+                        item.quality = updatedQuality;
+                    }
+                    item.sellIn -= 1;
+                    break;
+                case SULFURAS:
+                    break;
+                case CONJURED:
+                    if(item.sellIn > 0){
+                        updatedQuality -= 2;
+                    } else {
+                        updatedQuality -= 4;
+                    }
+                    if (updatedQuality >= 0){
+                        item.quality = updatedQuality;
+                    }
+                    item.sellIn -= 1;
+                    break;
+                default:
+                    if(item.sellIn > 0){
+                        updatedQuality -= 1;
+                    } else {
+                        updatedQuality -= 2;
+                    }
+                    if (updatedQuality >= 0){
+                        item.quality = updatedQuality;
+                    }
+                    item.sellIn -= 1;
             }
         }
     }
