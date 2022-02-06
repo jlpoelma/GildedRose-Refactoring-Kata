@@ -16,7 +16,7 @@ The GildedRoseTest class tests the following cases:
 
 I first cleaned up the nested if-statements by extracting the item name strings to variables and by shortening some notations. Afterwards, I replaced the nested if-statements by a switch-case statements which matches on the item names to make the function more readable.
 
-Subsequently, I wanted to create a seperate updateQuality function for each type of item, as the requirements stated that the original Item class should not be modified, I instead created an ItemUpdater Enum which contains two methods:
+Subsequently, I wanted to create a seperate updateQuality function for each type of item. As the requirements stated that the original Item class should not be modified, I instead created an ItemUpdater Enum which contains two methods:
 *   updateQuality(Item item): updates the quality of the given item
 *   updateSellIn(Item item): updates the sellIn of the given item
 The ItemUpdater Enum contains implementations for each of these functions for each type of item.
